@@ -1,24 +1,23 @@
 Config = {}
-
+Config.Locale = 'en'
 Config.DrawDistance = 20.0
+
 Config.MarkerSize   = {x = 0.5, y = 0.5, z = 0.35}
 Config.MarkerColor  = {r = 255, g = 255, b = 23}
-Config.MarkerType   = 21
+Config.MarkerType   = 21 -- -1 for no marker
 
-Config.Zones = {}
+Config.Zones = {
+  vector3(463.22, -996.36, 30.5),
+  vector3(74.67, -1970.99, 19.77),
+  vector3(-160.90, -1638.56, 33.02),
+  vector3(-18.15, -1439.02, 30.10),
+  vector3(8.45, 528.58, 169.63),
+  vector3(103.83, -1301.6, 27.77),
+  vector3(-1526.04, 832.65, 180.59),
+  vector3(-1595.11, 2102.05, 68.3)
+}
 
-Config.Umkleiden = {
-  {x = 463.22,   y = -996.36,  z = 30.5},
-  {x = 74.67,    y = -1970.99, z = 19.77},
-  {x = -160.90,  y = -1638.56, z = 33.02},
-  {x = -18.15,   y = -1439.02, z = 30.10},
-  {x = 8.45,   	 y = 528.58,   z = 169.63},
-  {x = 103.83,   y = -1301.6,  z = 27.77},
-  {x = -1526.04, y = 832.65,   z = 180.59},
-  {x = -1595.11, y = 2102.05,  z = 68.3},
-  
- }
-
+--[[
 for i=1, #Config.Umkleiden, 1 do
 
 	Config.Zones['Umkleide_' .. i] = {
@@ -29,3 +28,4 @@ for i=1, #Config.Umkleiden, 1 do
   }
 
 end
+--]]
