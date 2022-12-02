@@ -1,6 +1,6 @@
 local CurrentActionData = {}
 local LastZone, CurrentAction, CurrentActionMsg
-local HasLoadCloth, HasAlreadyEnteredMarker = false, false
+local HasAlreadyEnteredMarker = false
 
 function OpenMainMenu()
 	ESX.UI.Menu.CloseAll()
@@ -10,28 +10,24 @@ function OpenMainMenu()
     	title    = 'Outfit',
     	align    = 'top-left',
     	elements = {
-			{label = 'Outfit wechseln', name = 'change_outfit'},
-			{label = 'Outfit löschen', name = 'delete_outfit'}
+			{label = 'Outfit wechseln', value = 'change_outfit'},
+			{label = 'Outfit löschen', value = 'delete_outfit'}
 		},
     }, function(data, menu)
-	menu.close()
+		menu.close()
 
     if data.current.value == 'change_outfit' then
     	ESX.TriggerServerCallback('lama_cloackroom:getPlayerDressing', function(dressing)
         	local elements = {}
 
-			--[[
-        	for i=1, #dressing, 1 do
-        		table.insert(elements, {label = dressing[i], value = i})
-        	end --]]
 			for i=1, #dressing, 1 do
 				elements[#elements + 1] = {
-					title = dressing[i],
+					label = dressing[i],
 					value = i
 				}
 			end
 
-        	ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'switch_outfit', { 
+        	ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'change_outfit', { 
 				css      = 'umkleide',
             	title    = 'Outfit Wechseln',
             	align    = 'top-left',
@@ -47,7 +43,6 @@ function OpenMainMenu()
                 		end)
 				  
 						ESX.ShowNotification('Kleidung geändert.')
-						HasLoadCloth = true
                 	end, data.current.value)
               	end)
             end, function(data, menu)
@@ -64,19 +59,14 @@ function OpenMainMenu()
 		ESX.TriggerServerCallback('lama_cloackroom:getPlayerDressing', function(dressing)
 			local elements = {}
 
-			--[[
-			for i=1, #dressing, 1 do
-				table.insert(elements, {label = dressing[i], value = i})
-			end --]]
-
 			for i=1, #dressing, 1 do
 				elements[#elements + 1] = {
-					title = dressing[i],
+					label = dressing[i],
 					value = i
 				}
 			end
 
-			ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'remove_outfit', {
+			ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'delete_outfit', {
 				css      = 'umkleide',
             	title    = 'Outfit Löschen',
             	align    = 'top-left',
@@ -109,7 +99,7 @@ end
 
 
 AddEventHandler('lama_cloackroom:hasEnteredMarker', function(zone)
-	CurrentAction     = 'shop_menu'
+	CurrentAction     = 'main_action'
 	CurrentActionMsg  = 'Drücke ~INPUT_CONTEXT~ um den ~b~Kleiderschrank~s~ zu öffnen'
 	CurrentActionData = {}
 end)
@@ -118,27 +108,19 @@ end)
 AddEventHandler('lama_cloackroom:hasExitedMarker', function(zone)
 	CurrentAction = nil
 	ESX.UI.Menu.CloseAll()
-
-	if not HasLoadCloth then 
-		TriggerEvent('esx_skin:getLastSkin', function(skin)
-			TriggerEvent('skinchanger:loadSkin', skin) 
-		end)
-	end
 end)
 
 
 -- Display markers
 CreateThread(function()
 	while true do
-		local Sleep = 2000
-
-		Sleep = 500
+		local Sleep = 500
 		local coords, letSleep = GetEntityCoords(PlayerPedId()), true
 
 		for k,v in pairs(Config.Zones) do
-			if Config.MarkerType ~= -1 and #(coords - v.Pos) < Config.DrawDistance then
+			if #(coords - v) < Config.DrawDistance then
 				Sleep = 0
-				DrawMarker(Config.MarkerType, v.Pos.x, v.Pos.y, v.Pos.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Config.MarkerSize.x, Config.MarkerSize.y, Config.MarkerSize.z, Config.MarkerColor.r, Config.MarkerColor.g, Config.MarkerColor.b, 100, false, true, 2, false, nil, nil, false)
+				DrawMarker(Config.MarkerType, v.x, v.y, v.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Config.MarkerSize.x, Config.MarkerSize.y, Config.MarkerSize.z, Config.MarkerColor.r, Config.MarkerColor.g, Config.MarkerColor.b, 100, false, true, 2, false, nil, nil, false)
 				letSleep = false
 			end
 		end		
@@ -155,7 +137,7 @@ CreateThread(function()
 		local currentZone = nil
 
 		for k,v in pairs(Config.Zones) do
-			if(#(coords - v.Pos) < Config.MarkerSize.x) then
+			if(#(coords - v) < Config.MarkerSize.x) then
 				Sleep = 0
 				isInMarker  = true
 				currentZone = 'main_action'
