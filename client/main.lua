@@ -6,17 +6,16 @@ function OpenMainMenu()
 	ESX.UI.Menu.CloseAll()
 
 	ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'main_outfit', {
-		css      = 'umkleide',
     	title    = 'Outfit',
     	align    = 'top-left',
     	elements = {
-			{label = 'Outfit wechseln', value = 'change_outfit'},
-			{label = 'Outfit löschen', value = 'delete_outfit'}
+			{label = _U('change_outfit'), value = 'change_outfit'},
+			{label = _U('remove_outfit'), value = 'delete_outfit'}
 		},
     }, function(data, menu)
 		menu.close()
 
-    if data.current.value == 'change_outfit' then
+    if data.current.value == 'change_outfit' then 
     	ESX.TriggerServerCallback('lama_cloackroom:getPlayerDressing', function(dressing)
         	local elements = {}
 
@@ -28,8 +27,7 @@ function OpenMainMenu()
 			end
 
         	ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'change_outfit', { 
-				css      = 'umkleide',
-            	title    = 'Outfit Wechseln',
+            	title    = _U('change_outfit'),
             	align    = 'top-left',
             	elements = elements,
             }, function(data, menu)
@@ -42,14 +40,14 @@ function OpenMainMenu()
                 			TriggerServerEvent('esx_skin:save', skin)
                 		end)
 				  
-						ESX.ShowNotification('Kleidung geändert.')
+						ESX.ShowNotification(_U('changed_msg'))
                 	end, data.current.value)
               	end)
             end, function(data, menu)
             menu.close()
 			  
 			CurrentAction     = 'main_action'
-			CurrentActionMsg  = 'Drücke ~INPUT_CONTEXT~ um den ~b~Kleiderschrank~s~ zu öffnen'
+			CurrentActionMsg  = _U('action_msg')
 			CurrentActionData = {}
     		end)	
         end)
@@ -67,21 +65,20 @@ function OpenMainMenu()
 			end
 
 			ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'delete_outfit', {
-				css      = 'umkleide',
-            	title    = 'Outfit Löschen',
+            	title    = _U('remove_outfit'),
             	align    = 'top-left',
             	elements = elements,
             }, function(data, menu)
 			menu.close()
 
 			TriggerServerEvent('lama_cloackroom:deleteOutfit', data.current.value)	
-			ESX.ShowNotification('Outfit gelöscht.')
+			ESX.ShowNotification(_U('removed_msg'))
 
             end, function(data, menu)
             menu.close()
 			  
 		 	CurrentAction     = 'main_action'
-			CurrentActionMsg  = 'Drücke ~INPUT_CONTEXT~ um den ~b~Kleiderschrank~s~ zu öffnen'
+			CurrentActionMsg  = _U('action_msg')
 			CurrentActionData = {}
             end)
 		end)
@@ -91,7 +88,7 @@ function OpenMainMenu()
 	menu.close()
 
     CurrentAction     = 'main_action'
-    CurrentActionMsg  = 'Drücke ~INPUT_CONTEXT~ um den ~b~Kleiderschrank~s~ zu öffnen'
+    CurrentActionMsg  = _U('action_msg')
     CurrentActionData = {}
 
     end)
@@ -100,7 +97,7 @@ end
 
 AddEventHandler('lama_cloackroom:hasEnteredMarker', function(zone)
 	CurrentAction     = 'main_action'
-	CurrentActionMsg  = 'Drücke ~INPUT_CONTEXT~ um den ~b~Kleiderschrank~s~ zu öffnen'
+	CurrentActionMsg  = _U('action_msg')
 	CurrentActionData = {}
 end)
 
