@@ -1,6 +1,6 @@
 Config = {}
 Config.Locale = 'en'
-Config.DrawDistance = 20.0
+Config.DrawDistance = 10
 
 Config.MarkerSize   = {x = 0.5, y = 0.5, z = 0.35}
 Config.MarkerColor  = {r = 255, g = 255, b = 23}
@@ -14,18 +14,5 @@ Config.Zones = {
   vector3(8.45, 528.58, 169.63),
   vector3(103.83, -1301.6, 27.77),
   vector3(-1526.04, 832.65, 180.59),
-  vector3(-1595.11, 2102.05, 68.3)
+  vector3(-1595.11, 2102.05, 68.3) 
 }
-
---[[
-for i=1, #Config.Umkleiden, 1 do
-
-	Config.Zones['Umkleide_' .. i] = {
-	 	Pos   = Config.Umkleiden[i],
-	 	Size  = Config.MarkerSize,
-	 	Color = Config.MarkerColor,
-	 	Type  = Config.MarkerType
-  }
-
-end
---]]
