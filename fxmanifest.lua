@@ -3,7 +3,7 @@ games {'gta5'}
 lua54 'yes'
 
 author 'SirLamaGott'
-description 'Lama - Umkleide'
+description 'Lama - Cloakroom'
 version '2.2.1'
 
 shared_script 'config.lua'

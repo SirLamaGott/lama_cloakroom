@@ -1,5 +1,5 @@
-RegisterServerEvent('lama_cloackroom:deleteOutfit')
-AddEventHandler('lama_cloackroom:deleteOutfit', function(label)
+RegisterServerEvent('lama_cloakroom:deleteOutfit')
+AddEventHandler('lama_cloakroom:deleteOutfit', function(label)
 	local xPlayer = ESX.GetPlayerFromId(source)
 
 	TriggerEvent('esx_datastore:getDataStore', 'property', xPlayer.identifier, function(store)
@@ -14,7 +14,7 @@ AddEventHandler('lama_cloackroom:deleteOutfit', function(label)
 	end)
 end) 
 
-ESX.RegisterServerCallback('lama_cloackroom:getPlayerDressing', function(source, cb)
+ESX.RegisterServerCallback('lama_cloakroom:getPlayerDressing', function(source, cb)
   local xPlayer = ESX.GetPlayerFromId(source)
 
   TriggerEvent('esx_datastore:getDataStore', 'property', xPlayer.identifier, function(store)
@@ -30,7 +30,7 @@ ESX.RegisterServerCallback('lama_cloackroom:getPlayerDressing', function(source,
   end)
 end)
 
-ESX.RegisterServerCallback('lama_cloackroom:getPlayerOutfit', function(source, cb, num)
+ESX.RegisterServerCallback('lama_cloakroom:getPlayerOutfit', function(source, cb, num)
 	local xPlayer = ESX.GetPlayerFromId(source)
   
 	TriggerEvent('esx_datastore:getDataStore', 'property', xPlayer.identifier, function(store)
