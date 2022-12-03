@@ -16,6 +16,7 @@ server_scripts {
 }
 client_scripts {
     '@es_extended/locale.lua', 
+    'locales/*.lua',
     'client/main.lua'
 }
 
