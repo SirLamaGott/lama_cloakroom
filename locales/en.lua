@@ -5,4 +5,4 @@ Locales['en'] = {
 
     ['change_outfit'] = 'Change Outfit',
     ['remove_outfit'] = 'Remove Outfit',
-} 
+}
