@@ -16,7 +16,7 @@ function OpenMainMenu()
 		menu.close()
 
     if data.current.value == 'change_outfit' then 
-    	ESX.TriggerServerCallback('lama_cloackroom:getPlayerDressing', function(dressing)
+    	ESX.TriggerServerCallback('lama_cloakroom:getPlayerDressing', function(dressing)
         	local elements = {}
 
 			for i=1, #dressing, 1 do
@@ -32,7 +32,7 @@ function OpenMainMenu()
             	elements = elements,
             }, function(data, menu)
             	TriggerEvent('skinchanger:getSkin', function(skin)
-            		ESX.TriggerServerCallback('lama_cloackroom:getPlayerOutfit', function(clothes)
+            		ESX.TriggerServerCallback('lama_cloakroom:getPlayerOutfit', function(clothes)
                 		TriggerEvent('skinchanger:loadClothes', skin, clothes)
                 		TriggerEvent('esx_skin:setLastSkin', skin)
 
@@ -54,7 +54,7 @@ function OpenMainMenu()
     end
 	  
 	if data.current.value == 'delete_outfit' then
-		ESX.TriggerServerCallback('lama_cloackroom:getPlayerDressing', function(dressing)
+		ESX.TriggerServerCallback('lama_cloakroom:getPlayerDressing', function(dressing)
 			local elements = {}
 
 			for i=1, #dressing, 1 do
@@ -71,7 +71,7 @@ function OpenMainMenu()
             }, function(data, menu)
 			menu.close()
 
-			TriggerServerEvent('lama_cloackroom:deleteOutfit', data.current.value)	
+			TriggerServerEvent('lama_cloakroom:deleteOutfit', data.current.value)	
 			ESX.ShowNotification(_U('removed_msg'))
 
             end, function(data, menu)
@@ -95,14 +95,14 @@ function OpenMainMenu()
 end
 
 
-AddEventHandler('lama_cloackroom:hasEnteredMarker', function(zone)
+AddEventHandler('lama_cloakroom:hasEnteredMarker', function(zone)
 	CurrentAction     = 'main_action'
 	CurrentActionMsg  = _U('action_msg')
 	CurrentActionData = {}
 end)
 
 
-AddEventHandler('lama_cloackroom:hasExitedMarker', function(zone)
+AddEventHandler('lama_cloakroom:hasExitedMarker', function(zone)
 	CurrentAction = nil
 	ESX.UI.Menu.CloseAll()
 end)
@@ -144,12 +144,12 @@ CreateThread(function()
 		if (isInMarker and not HasAlreadyEnteredMarker) or (isInMarker and LastZone ~= currentZone) then
 			HasAlreadyEnteredMarker = true
 			LastZone                = currentZone
-			TriggerEvent('lama_cloackroom:hasEnteredMarker', currentZone)
+			TriggerEvent('lama_cloakroom:hasEnteredMarker', currentZone)
 		end
 
 		if not isInMarker and HasAlreadyEnteredMarker then
 			HasAlreadyEnteredMarker = false
-			TriggerEvent('lama_cloackroom:hasExitedMarker', LastZone)
+			TriggerEvent('lama_cloakroom:hasExitedMarker', LastZone)
 		end
 		
 	Wait(Sleep)
